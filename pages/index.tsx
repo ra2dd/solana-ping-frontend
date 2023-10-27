@@ -3,9 +3,16 @@ import styles from '../styles/Home.module.css'
 import { AppBar } from '../components/AppBar'
 import Head from 'next/head'
 import { PingButton } from '../components/PingButton'
+import { ChangeAction } from '../components/ChangeAction'
 import WalletContextProvider from '../components/WalletContextProvider'
+import { useState } from 'react'
 
 const Home: NextPage = (props) => {
+  const [action, setAction] = useState('ping')
+
+  function changeAction(action : string) {
+    setAction(action)
+  }
 
   return (
     <div className={styles.App}>
@@ -19,7 +26,12 @@ const Home: NextPage = (props) => {
       <WalletContextProvider>
         <AppBar />
         <div className={styles.AppBody}>
-          <PingButton/>
+          <ChangeAction changeAction={changeAction}/>
+          {action == 'ping' ? (
+            <PingButton/>
+          ) : (
+            <><p>Send transaction</p></>
+          )}
         </div>
       </WalletContextProvider>
     </div>

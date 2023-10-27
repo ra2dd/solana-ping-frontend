@@ -1,0 +1,11 @@
+.changeButton {
+    all: unset;
+    font-size: 1rem;
+    border: 2px solid darkblue;
+    padding: 2px 0.5rem;
+}
+
+.changeButton[active] {
+    background-color: darkblue;
+    color: white;
+}
