@@ -32,10 +32,23 @@
   padding-top: 50px;
 }
 
-.form {
+.App form {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; 
+}
+
+.App form > input {
+  margin-bottom: 1rem;
+}
+
+.App form > input[type="text"] {
+  width: 24rem;
+  text-align: center;
+}
+
+.App form > label {
+  font-size: 1rem;
 }
 
 .input {
@@ -50,6 +63,7 @@
   border: 0;
   font-family: "Roboto", sans-serif;
 }
+
 .formButton {
   margin: 10px 0 10px 0;
   padding: 15px;

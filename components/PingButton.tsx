@@ -2,6 +2,7 @@ import { FC, useState } from 'react'
 import styles from '../styles/PingButton.module.css'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import * as web3 from '@solana/web3.js'
+import { SignatureLink } from './SignatureLink'
 
 export const PingButton: FC = () => {
 	const { connection } = useConnection();
@@ -34,21 +35,6 @@ export const PingButton: FC = () => {
 			setSignature(sig);
 		});
     };
-
-	function sigLink() {
-		if (signature == '') {
-			return;
-		}
-
-		const link = `https://explorer.solana.com/tx/${signature}?cluster=devnet`;
-		return (
-			<div>
-				<p>
-					Check transaction <a href={link}>on sol explorer</a>
-				</p>
-			</div>
-		)				
-	}
     
 	return (
 		<div className={styles.buttonContainer}>
@@ -61,7 +47,7 @@ export const PingButton: FC = () => {
 					<p>Connect sol wallet to ping account.</p>
 				</>
 			)}
-			{sigLink()}
+			<SignatureLink signature={signature} />
 		</div>
 	);
 }

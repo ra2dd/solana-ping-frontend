@@ -11,7 +11,7 @@ export const ChangeAction: FC = ({ changeAction }) => {
         event.target.setAttribute('active', 'true');
     }
     return (
-        <div>
+        <div class={styles.changeActionCtn}>
             <button 
                 className={styles.changeButton}
                 active='true'

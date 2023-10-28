@@ -6,6 +6,7 @@ import { PingButton } from '../components/PingButton'
 import { ChangeAction } from '../components/ChangeAction'
 import WalletContextProvider from '../components/WalletContextProvider'
 import { useState } from 'react'
+import { SendTransaction } from '../components/SendTransaction'
 
 const Home: NextPage = (props) => {
   const [action, setAction] = useState('ping')
@@ -30,7 +31,7 @@ const Home: NextPage = (props) => {
           {action == 'ping' ? (
             <PingButton/>
           ) : (
-            <><p>Send transaction</p></>
+            <SendTransaction />
           )}
         </div>
       </WalletContextProvider>
