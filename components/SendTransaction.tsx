@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import * as web3 from '@solana/web3.js'
 import { SignatureLink } from './SignatureLink'
@@ -9,6 +9,7 @@ export const SendTransaction: FC = () => {
     const [ sendAddress, setSendAddress ] = useState('');
     const [ sendAmount, setSendAmount ] = useState(0);
     const [ signature, setSignature ] = useState('');
+    const [ balance, setBalance ] = useState(0);
 
     function changeAddress(event : Object) {
         setSendAddress(event.target.value);
@@ -49,10 +50,34 @@ export const SendTransaction: FC = () => {
         });
     }
 
+    const displayBalance = async () => {
+        console.log(balance);
+        return balance;
+    }
+
+    useEffect(() => {
+        if (!connection || !publicKey) {
+            return;
+        }
+        async function fetchBalance() {
+            try {
+                const balance = await connection.getBalance(publicKey);
+                // setTimeout(() => {console.log('delayed for 20sec');}, 5000);
+                setBalance(balance / web3.LAMPORTS_PER_SOL);
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+
+        fetchBalance();
+    }, [connection, publicKey]);
+
     return (
         <div>
             {publicKey ? (
                 <form onSubmit={handleSubmit}>
+                    <p>Sol balance: {balance}</p>
                     <label htmlFor="sol-address">Solana wallet address</label>
                     <input type="text" id="sol-address" onChange={changeAddress}/>
 
