@@ -43,34 +43,42 @@ export const SendTransaction: FC = () => {
         transaction.add(sendInstruction);
 
         sendTransaction(transaction, connection).then((sig) => {
-            console.log(sig);
             setSignature(sig);
             setSendAddress('');
             setSendAmount(0);
         });
     }
 
-    const displayBalance = async () => {
-        console.log(balance);
-        return balance;
-    }
-
     useEffect(() => {
         if (!connection || !publicKey) {
             return;
         }
+
+        connection.onAccountChange(
+            publicKey,
+            (updatedAccountInfo) => {
+                setBalance(updatedAccountInfo.lamports / web3.LAMPORTS_PER_SOL)
+            },
+            'confirmed'
+        );
+
+        connection.getAccountInfo(publicKey).then(info => {
+            setBalance(info.lamports / web3.LAMPORTS_PER_SOL);
+        });
+
+        /*
         async function fetchBalance() {
             try {
                 const balance = await connection.getBalance(publicKey);
-                // setTimeout(() => {console.log('delayed for 20sec');}, 5000);
                 setBalance(balance / web3.LAMPORTS_PER_SOL);
             }
             catch (error) {
                 console.log(error);
             }
         }
-
         fetchBalance();
+        */
+
     }, [connection, publicKey]);
 
     return (
